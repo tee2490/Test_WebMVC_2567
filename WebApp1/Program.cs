@@ -7,6 +7,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddSingleton<IProductService,ProductService>();
 
+//builder.Services.AddSingleton<ITestDI, TestDI>();
+//builder.Services.AddScoped<ITestDI, TestDI>();
+builder.Services.AddTransient<ITestDI, TestDI>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
