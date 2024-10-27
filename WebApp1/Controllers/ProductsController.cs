@@ -24,8 +24,23 @@ namespace WebApp1.Controllers
             return RedirectToAction("Index");
         }
 
-        public IActionResult Create()
+        public IActionResult Create(int? id)
         {
+
+            if (id == null)
+            {
+                //create
+                ProductService.IsCreate = true;
+            }
+            else 
+            {
+                //update
+                ProductService.IsCreate = false;
+                var updateProduct = ps.SearchProduct(id.Value);
+                return View(updateProduct);
+            }
+
+
             return View();
         }
 
@@ -34,12 +49,21 @@ namespace WebApp1.Controllers
         {
             if (ModelState.IsValid)
             {
-                //ถูกต้อง
-               var exist =  ps.AddData(product);
+                if (ProductService.IsCreate)
+                {
+                    //create
+                    var exist = ps.AddData(product);
 
-                if(!exist)return RedirectToAction("Index");
+                    if (!exist) return RedirectToAction("Index");
 
-                TempData["alert"] = "คุณตั้งรหัสซ้ำ";
+                    TempData["alert"] = "คุณตั้งรหัสซ้ำ";
+                }
+                else
+                {
+                    //update
+                    ps.UpdateData(product);
+                    return RedirectToAction("Index");
+                }
             }
             
             return View();

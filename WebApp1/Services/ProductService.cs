@@ -5,6 +5,7 @@ namespace WebApp1.Services
     public class ProductService : IProductService
     {
         public List<Product> Products { get; set; }
+        static public bool IsCreate { get; set; } = true;
 
         Random rnd = new Random();
 
@@ -57,6 +58,15 @@ namespace WebApp1.Services
 
             Products.Add(product);
             return false;
+        }
+
+        public void UpdateData(Product product)
+        {
+            var pd = Products.Find(px => px.Id == product.Id);
+            var index = Products.IndexOf(pd);
+
+            Products.RemoveAt(index);
+            Products.Insert(index, product);
         }
     }
 }

@@ -4,8 +4,6 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
-
 <h4>Product</h4>
 <hr />
 
@@ -22,7 +20,7 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Id" class="control-label"></label>
-                <input asp-for=Id class="form-control" />
+                <input asp-for=Id class="form-control" readonly = "@(Model==null?false:true)" />
                 <span asp-validation-for="Id" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -41,8 +39,15 @@
                 <span asp-validation-for="Amount" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
+                @if (Model == null)
+                {
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                }
+                else
+                {
+                    <input type="submit" value="Update" class="btn btn-dark" />
+                }
+                </div>
         </form>
     </div>
 </div>
