@@ -1,6 +1,7 @@
 global using WebApp1.Models;
 using WebApp1.Data;
 using WebApp1.Services;
+using WebApp1.Services.New;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,7 +13,7 @@ builder.Services.AddSingleton<IProductService,ProductService>();
 //builder.Services.AddScoped<ITestDI, TestDI>();
 builder.Services.AddTransient<ITestDI, TestDI>();
 builder.Services.AddDbContext<DataContext>();
-
+builder.Services.AddScoped<INewProductService,NewProductService>();
 
 var app = builder.Build();
 
