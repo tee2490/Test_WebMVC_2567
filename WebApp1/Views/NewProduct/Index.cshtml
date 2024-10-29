@@ -7,7 +7,7 @@
 <h1>Index</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="UpCreate">Create New</a>
 </p>
 <table class="table">
     <thead>
@@ -37,8 +37,9 @@
                 @Html.DisplayFor(modelItem => item.Amount)
             </td>
             <td>
-                <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a class="btn btn-outline-danger" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <a class="btn btn-warning" asp-action="UpCreate" asp-route-id="@item.Id">Edit</a> |
+                <a class="btn btn-outline-danger" asp-action="Delete" asp-route-id="@item.Id"
+                onclick="return confirm('ยืนยันการลบ')">Delete</a>
             </td>
         </tr>
 }
