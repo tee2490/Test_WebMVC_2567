@@ -12,9 +12,10 @@ namespace WebApp1.Controllers
             this.ns = ns;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(string keyword)
         {
-            return View(ns.GetAll());
+            var products = ns.GetAll(keyword);
+            return View(products);
         }
 
         public IActionResult UpCreate(int? id)
@@ -55,6 +56,7 @@ namespace WebApp1.Controllers
             ns.DeleteData(id);
             return RedirectToAction("Index");
         }
+        
 
 
     }

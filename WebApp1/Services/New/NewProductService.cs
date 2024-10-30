@@ -12,9 +12,20 @@ namespace WebApp1.Services.New
             this.db = db;
         }
 
-        public List<Product> GetAll()
+        public List<Product> GetAll(string keyword)
         {
-          return  db.Products.OrderByDescending(px=>px.Id).ToList();
+            keyword = keyword?.ToUpper();
+
+            var products = db.Products.OrderByDescending(px => px.Id).ToList();
+
+            if (!string.IsNullOrEmpty(keyword))
+            {
+                products = products.Where(px => px.Name.ToUpper().Contains(keyword) ||
+                px.Price.Equals(Convert.ToDouble(keyword)))
+                .OrderByDescending(px => px.Id).ToList();
+            }
+
+            return products;
         }
 
         public void AddData(Product product)
@@ -25,7 +36,7 @@ namespace WebApp1.Services.New
 
         public Product SearchData(int id)
         {
-          return db.Products.Find(id);
+            return db.Products.Find(id);
         }
 
         public void UpdateData(Product product)
@@ -38,7 +49,7 @@ namespace WebApp1.Services.New
         {
             var product = SearchData(id);
 
-            if (product != null) 
+            if (product != null)
             {
                 db.Products.Remove(product);
                 db.SaveChanges();
