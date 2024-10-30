@@ -21,8 +21,7 @@ namespace WebApp1.Services.New
             if (!string.IsNullOrEmpty(keyword))
             {
                 products = products.Where(px => px.Name.ToUpper().Contains(keyword) ||
-                px.Price.Equals(Convert.ToDouble(keyword)))
-                .OrderByDescending(px => px.Id).ToList();
+                px.Price.ToString().Contains(keyword)).ToList();
             }
 
             return products;
