@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebApp2.Data;
 
@@ -11,9 +12,11 @@ using WebApp2.Data;
 namespace WebApp2.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20241030070423_ComponentToFeature")]
+    partial class ComponentToFeature
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -37,46 +40,6 @@ namespace WebApp2.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Categories");
-                });
-
-            modelBuilder.Entity("WebApp2.Models.Component", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("FeatureId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("FeatureId")
-                        .IsUnique();
-
-                    b.ToTable("Components");
-                });
-
-            modelBuilder.Entity("WebApp2.Models.Feature", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Features");
                 });
 
             modelBuilder.Entity("WebApp2.Models.Product", b =>
@@ -136,17 +99,6 @@ namespace WebApp2.Migrations
                     b.ToTable("ProductDetails");
                 });
 
-            modelBuilder.Entity("WebApp2.Models.Component", b =>
-                {
-                    b.HasOne("WebApp2.Models.Feature", "Feature")
-                        .WithOne("Component")
-                        .HasForeignKey("WebApp2.Models.Component", "FeatureId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Feature");
-                });
-
             modelBuilder.Entity("WebApp2.Models.Product", b =>
                 {
                     b.HasOne("WebApp2.Models.Category", "Category")
@@ -163,12 +115,6 @@ namespace WebApp2.Migrations
                     b.HasOne("WebApp2.Models.Product", null)
                         .WithMany("ProductDetails")
                         .HasForeignKey("ProductId");
-                });
-
-            modelBuilder.Entity("WebApp2.Models.Feature", b =>
-                {
-                    b.Navigation("Component")
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("WebApp2.Models.Product", b =>
