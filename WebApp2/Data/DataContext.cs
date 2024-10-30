@@ -12,6 +12,7 @@ namespace WebApp2.Data
         public DbSet<Category> Categories { get; set; }
         public DbSet<Component> Components { get; set; }
         public DbSet<Feature> Features { get; set; }
+        public DbSet<ComponentProduct> ComponentProducts { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -19,5 +20,14 @@ namespace WebApp2.Data
             optionsBuilder.UseSqlServer("Server=Teeradet; Database=TestAllDB2567; Trusted_Connection=True; TrustServerCertificate=True");
 
         }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<ComponentProduct>()
+                .HasKey(key => new { key.ProductId, key.ComponentId });
+        }
+
     }
 }
