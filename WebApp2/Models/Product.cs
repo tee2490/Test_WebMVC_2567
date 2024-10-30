@@ -15,5 +15,7 @@ namespace WebApp2.Models
         //public int xxxId { get; set; } //fk คีย์นอก
         //[ForeignKey("xxxId")]
         //public Category Category { get; set; } //ความสัมพันธ์ 1 M
+
+        public List<ProductDetails> ProductDetails  { get; set; }
     }
 }
