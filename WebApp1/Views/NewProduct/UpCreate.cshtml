@@ -10,8 +10,12 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="UpCreate">
+        <form asp-action="UpCreate" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <input asp-for="Image"  hidden />
+            <input asp-for="ImageBase64" hidden />
+
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
                 <input asp-for="Name" class="form-control" />
@@ -27,6 +31,19 @@
                 <input asp-for="Amount" class="form-control" />
                 <span asp-validation-for="Amount" class="text-danger"></span>
             </div>
+
+            <div class="form-group">
+                <label asp-for="Image" class="control-label"></label>
+                <input accept="image/*" type="file" name="file" class="form-control" onchange="loadFile(event)" />
+                <span asp-validation-for="Amount" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <img src="@Model.Image" id="output" width="200" />
+            </div>
+
+           
+
             <div class="form-group">
                 @if (Model.Id == 0)
                 {
@@ -47,4 +64,12 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+        var loadFile = function (event) {
+            var image = document.getElementById('output');
+            image.src = URL.createObjectURL(event.target.files[0]);
+        };
+    </script>
+
 }

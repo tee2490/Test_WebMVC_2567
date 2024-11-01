@@ -40,12 +40,12 @@ namespace WebApp1.Controllers
         }
 
         [HttpPost]
-        public IActionResult UpCreate(Product product)
+        public IActionResult UpCreate(Product product,IFormFile file)
         {
             if (product.Id == 0)
-                ns.AddData(product);
+                ns.AddData(product,file);
             else 
-                ns.UpdateData(product);
+                ns.UpdateData(product, file);
 
             return RedirectToAction("Index");
         }
