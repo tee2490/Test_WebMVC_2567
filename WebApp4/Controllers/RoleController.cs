@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using WebApp4.Models;
 using WebApp4.Services;
 
 namespace WebApp4.Controllers
@@ -9,7 +10,6 @@ namespace WebApp4.Controllers
 
         public RoleController(IRoleService roleService)
         {
-            roleService = roleService;
             this.roleService = roleService;
         }
 
@@ -23,6 +23,21 @@ namespace WebApp4.Controllers
         {
             return View();
         }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(RoleDto roleDto)
+        {
+            var success = await roleService.Add(roleDto);
+
+            if (!success)
+            {
+                TempData["message"] = "ไม่สำเร็จ";
+                return View();
+            }
+
+            return RedirectToAction(nameof(Index));
+        }
+
 
     }
 }

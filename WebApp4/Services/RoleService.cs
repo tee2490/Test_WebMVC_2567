@@ -39,5 +39,28 @@ namespace WebApp4.Services
             return result;
         }
 
+        public async Task<IdentityRole> Find(string name)
+        {
+            var identityRole = await roleManager.FindByNameAsync(name);
+            return identityRole;
+        }
+
+        public async Task<bool> Update(RoleUpdateDto roleUpdateDto)
+        {
+            var identityRole = await Find(roleUpdateDto.Name);
+
+            if (identityRole == null) return false;
+
+            identityRole.Name = roleUpdateDto.UpdateName;
+            identityRole.NormalizedName = roleManager.NormalizeKey(roleUpdateDto.UpdateName);
+
+            var result = await roleManager.UpdateAsync(identityRole);
+
+            if (!result.Succeeded) return false;
+
+            return true;
+        }
+
+
     }
 }
