@@ -8,12 +8,12 @@ namespace WebApp4.Services
     public class RoleService : IRoleService
     {
         private readonly RoleManager<IdentityRole> roleManager;
-        private readonly UserManager<AppUser> userManger;
+        private readonly UserManager<AppUser> userManager;
 
-        public RoleService(RoleManager<IdentityRole> roleManager,UserManager<AppUser> userManger)
+        public RoleService(RoleManager<IdentityRole> roleManager,UserManager<AppUser> userManager)
         {
             this.roleManager = roleManager;
-            this.userManger = userManger;
+            this.userManager = userManager;
         }
 
         public async Task<bool> Add(RoleDto roleDto)
@@ -47,7 +47,7 @@ namespace WebApp4.Services
 
         public async Task<bool> Update(RoleUpdateDto roleUpdateDto)
         {
-            var identityRole = await Find(roleUpdateDto.Name);
+            var identityRole = await Find(roleUpdateDto.Name); //ค้นหา role เก่า
 
             if (identityRole == null) return false;
 
@@ -60,6 +60,24 @@ namespace WebApp4.Services
 
             return true;
         }
+
+        public async Task<bool> Delete(string name)
+        {
+            var identityRole = await Find(name);
+
+            if (identityRole == null) return false;
+
+            //ตรวจสอบมีผู้ใช้บทบาทนี้หรือไม่
+            var usersInRole = await userManager.GetUsersInRoleAsync(name);
+            if (usersInRole.Count != 0) return false;
+
+            var result = await roleManager.DeleteAsync(identityRole);
+
+            if (!result.Succeeded) return false;
+
+            return true;
+        }
+
 
 
     }

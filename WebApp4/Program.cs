@@ -1,6 +1,7 @@
 global using Microsoft.AspNetCore.Identity;
+global using WebApp4.Areas.Identity.Data;
 using Microsoft.EntityFrameworkCore;
-using WebApp4.Areas.Identity.Data;
+
 using WebApp4.Data;
 using WebApp4.Services;
 var builder = WebApplication.CreateBuilder(args);

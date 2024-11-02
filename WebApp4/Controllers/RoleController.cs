@@ -38,6 +38,32 @@ namespace WebApp4.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        public async Task<IActionResult> Edit(string name)
+        {
+            var result = await roleService.Find(name);
+
+            var roleUpdate = new RoleUpdateDto { Name = result.Name };
+
+            return View(roleUpdate);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(RoleUpdateDto roleUpdateDto)
+        {
+            var result = await roleService.Update(roleUpdateDto);
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<IActionResult> Delete(string name)
+        {
+            var result = await roleService.Delete(name);
+
+            return RedirectToAction(nameof(Index));
+        }
+
+
+
 
     }
 }

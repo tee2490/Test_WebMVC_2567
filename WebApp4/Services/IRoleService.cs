@@ -8,7 +8,7 @@ namespace WebApp4.Services
         Task<List<IdentityRole>> GetAll();
         Task<bool> Add(RoleDto roleDto);
         Task<bool> Update(RoleUpdateDto roleUpdateDto);
-        //Task<bool> Delete(string name);
+        Task<bool> Delete(string name);
         Task<IdentityRole> Find(string name);
 
     }
