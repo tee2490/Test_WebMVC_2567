@@ -37,7 +37,7 @@
                             </div>
                         </li>
 
-                        @if (!User.IsInRole(SD.Role_Admin))
+                        @if (User.IsInRole(SD.Role_Admin))
                         {
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Data Management</a>
