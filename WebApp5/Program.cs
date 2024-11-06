@@ -1,3 +1,6 @@
+global using WebApp5.Utility;
+global using WebApp5.Services;
+global using WebApp5.Models.Dtos;
 global using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 global using Microsoft.EntityFrameworkCore;
 global using WebApp5.Models;
@@ -5,7 +8,8 @@ global using System.ComponentModel.DataAnnotations;
 using WebApp5.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
-using WebApp5.Utility;
+
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -39,7 +43,7 @@ builder.Services.ConfigureApplicationCookie(options =>
 builder.Services.AddSingleton<IEmailSender, EmailSender>();
 
 builder.Services.AddRazorPages();
-
+builder.Services.AddScoped<IRoleService, RoleService>();
 
 
 var app = builder.Build();
