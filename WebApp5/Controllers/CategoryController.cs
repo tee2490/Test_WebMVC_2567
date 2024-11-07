@@ -43,7 +43,8 @@ namespace WebApp5.Controllers
             else
             {
                 //create
-                await categoryService.Add(category);
+             var success = await categoryService.Add(category);
+                if (success) TempData["message"] = "เพิ่มข้อมูลสำเร็จ";
             }
 
             return RedirectToAction(nameof(Index));

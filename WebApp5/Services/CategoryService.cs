@@ -12,10 +12,11 @@ namespace WebApp5.Services
             db = dataContext;
         }
 
-        public async Task Add(Category category)
+        public async Task<bool> Add(Category category)
         {
            await db.Categories.AddAsync(category);
-           await db.SaveChangesAsync();
+           var status = await db.SaveChangesAsync() > 0;
+            return status;
         }
 
         public async Task Delete(int id)
