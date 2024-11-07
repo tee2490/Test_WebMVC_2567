@@ -16,5 +16,6 @@ namespace WebApp5.Data
         }
 
         public DbSet<AppUser> AppUsers { get; set; }
+        public DbSet<Category> Categories { get; set; }
     }
 }
