@@ -19,9 +19,9 @@ namespace WebApp5.Controllers
             return View( await ps.GetAll() );
         }
 
-        public IActionResult Create(int? id) 
+        public async Task<IActionResult> Create(int? id) 
         {
-                    
+            var pd = ps.ProductDto();
 
             if (id == null || id == 0)
             {
@@ -29,10 +29,10 @@ namespace WebApp5.Controllers
             }
             else
             {
-                //productVM.Product = productContext.Products.Find(id);
+              pd.Product = await ps.GetById(id.Value);
             }
 
-            return View(ps.ProductDto());
+            return View(pd);
         }
 
 

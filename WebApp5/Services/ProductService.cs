@@ -65,9 +65,9 @@ namespace WebApp5.Services
             return await db.Products.Include(px=>px.Category).ToListAsync();
         }
 
-        public Task<Product> GetById(int id)
+        public async Task<Product> GetById(int id)
         {
-            throw new NotImplementedException();
+            return await db.Products.FindAsync(id);
         }
 
         public ProductDto ProductDto() 
