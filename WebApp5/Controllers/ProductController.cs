@@ -55,5 +55,21 @@ namespace WebApp5.Controllers
 
             return View(productDto);
         }
+
+        public async Task<IActionResult> Delete(int id)
+        {
+            var status = await ps.Delete(id);
+
+            var message = status switch
+            {
+                0 => "ไม่พบข้อมูล",
+                1 => "สำเร็จ",
+                2 => "ไม่สำเร็จ",
+            };
+
+            TempData["message"] = message;
+
+            return RedirectToAction(nameof(Index));
+        }
     }
 }

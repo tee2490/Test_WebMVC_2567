@@ -60,6 +60,26 @@ namespace WebApp5.Services
             return success;
         }
 
+        public async Task<int> Delete(int id)
+        {
+            var data = await GetById(id);
+            if (data == null) return 0;
+            
+
+            var oldImagePath = Path.Combine(webHostEnvironment.WebRootPath, data.ImageUrl.TrimStart('\\'));
+            if (System.IO.File.Exists(oldImagePath))
+            {
+                System.IO.File.Delete(oldImagePath);
+            }
+
+            db.Products.Remove(data);
+            var success =  await db.SaveChangesAsync() > 0;
+            var status = success ? 1 : 2;
+
+            return status;
+
+        }
+
         public async Task<List<Product>> GetAll()
         {
             return await db.Products.Include(px=>px.Category).ToListAsync();

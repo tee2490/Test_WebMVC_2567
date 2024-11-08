@@ -52,7 +52,7 @@
                 </td>
             <td>
                 <a asp-action="Create" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <a onclick="return confirm('ยืนยันการลบ')" class="btn btn-outline-danger" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
             </td>
         </tr>
 }
