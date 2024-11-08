@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using WebApp5.Data;
 
 namespace WebApp5.Controllers
 {
+    [Authorize(Roles ="Admin")]
     public class ProductController : Controller
     {
         private readonly ProductService ps;
