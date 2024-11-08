@@ -1,4 +1,5 @@
 ﻿
+using Microsoft.AspNetCore.Mvc.Rendering;
 using WebApp5.Data;
 
 namespace WebApp5.Services
@@ -26,5 +27,22 @@ namespace WebApp5.Services
         {
             throw new NotImplementedException();
         }
+
+        public ProductDto ProductDto() 
+        {
+            ProductDto productDto = new()
+            {
+                Product = new() { Name = "TestProduct", Price = 1, Description = "Test Descript" },
+                CategoryList = db.Categories.Select(
+                   u => new SelectListItem
+                   {
+                       Text = u.Name,
+                       Value = u.Id.ToString()
+                   })
+            };
+
+            return productDto;
+        }
+
     }
 }

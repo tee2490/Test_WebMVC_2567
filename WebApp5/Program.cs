@@ -45,7 +45,7 @@ builder.Services.AddSingleton<IEmailSender, EmailSender>();
 builder.Services.AddRazorPages();
 builder.Services.AddScoped<IRoleService, RoleService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
-builder.Services.AddScoped<IProductService,ProductService>();
+builder.Services.AddScoped<ProductService>();
 
 
 var app = builder.Build();
