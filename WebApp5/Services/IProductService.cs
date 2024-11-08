@@ -4,6 +4,6 @@
     {
         Task<List<Product>> GetAll();
         Task<Product> GetById(int id);
-        Task Add(Product product);
+        Task<bool> AddUpdate(ProductDto product,IFormFile file);
     }
 }

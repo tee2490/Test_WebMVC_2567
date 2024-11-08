@@ -1,21 +1,63 @@
-﻿
-using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using WebApp5.Data;
+
 
 namespace WebApp5.Services
 {
     public class ProductService : IProductService
     {
         private readonly DataContext db;
+        private readonly IWebHostEnvironment webHostEnvironment;
 
-        public ProductService(DataContext db)
+        public ProductService(DataContext db,IWebHostEnvironment webHostEnvironment)
         {
             this.db = db;
+            this.webHostEnvironment = webHostEnvironment;
         }
 
-        public Task Add(Product product)
+        public async Task<bool> AddUpdate(ProductDto data, IFormFile file)
         {
-            throw new NotImplementedException();
+
+                string wwwRootPath = webHostEnvironment.WebRootPath;
+                if (file != null)
+                {
+                    string fileName = Guid.NewGuid().ToString();
+                    var extension = Path.GetExtension(file.FileName);
+                    var uploads = Path.Combine(wwwRootPath, @"images\products");
+
+                    if (!Directory.Exists(uploads)) Directory.CreateDirectory(uploads);
+
+
+                    //กรณีมีรูปภาพเดิมต้องลบทิ้งก่อน
+                    if (data.Product.ImageUrl != null)
+                    {
+                        var oldImagePath = Path.Combine(wwwRootPath, data.Product.ImageUrl.TrimStart('\\'));
+                        if (System.IO.File.Exists(oldImagePath))
+                        {
+                            System.IO.File.Delete(oldImagePath);
+                        }
+                    }
+
+                    //บันทึกรุปภาพใหม่
+                    using (var fileStreams = new FileStream(Path.Combine(uploads, fileName + extension), FileMode.Create))
+                    {
+                        file.CopyTo(fileStreams);
+                    }
+                    data.Product.ImageUrl = @"\images\products\" + fileName + extension;
+                }
+
+                if (data.Product.Id == 0)
+                {
+                   await db.Products.AddAsync(data.Product);
+                }
+                else
+                {
+                    db.Products.Update(data.Product);
+                }
+
+               var success =  await db.SaveChangesAsync() > 0;
+
+            return success;
         }
 
         public async Task<List<Product>> GetAll()

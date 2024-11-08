@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using WebApp5.Data;
 
 namespace WebApp5.Controllers
@@ -38,9 +37,23 @@ namespace WebApp5.Controllers
 
 
         [HttpPost]
-        public IActionResult Create(ProductDto productDto,IFormFile file)
+        public async Task<IActionResult> Create(ProductDto productDto,IFormFile file)
         {
-            return View();
+            ModelState.Remove("file"); //ยกเลิกการตรวจสอบบางฟิลด์
+
+            if (ModelState.IsValid)
+            {
+              var success = await  ps.AddUpdate(productDto,file);
+
+                if (success)
+                {
+                    TempData["message"] = "Product managed successfully";
+                    return RedirectToAction(nameof(Index));
+                }
+
+            }
+
+            return View(productDto);
         }
     }
 }
