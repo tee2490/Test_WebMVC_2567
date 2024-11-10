@@ -5,7 +5,7 @@ global using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 global using Microsoft.EntityFrameworkCore;
 global using WebApp5.Models;
 global using System.ComponentModel.DataAnnotations;
-using WebApp5.Data;
+global using WebApp5.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 
@@ -46,6 +46,7 @@ builder.Services.AddRazorPages();
 builder.Services.AddScoped<IRoleService, RoleService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<ProductService>();
+builder.Services.AddScoped<ShoppingCartService>();
 
 
 var app = builder.Build();
