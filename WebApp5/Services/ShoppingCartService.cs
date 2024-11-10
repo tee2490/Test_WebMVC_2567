@@ -30,6 +30,19 @@ namespace WebApp5.Services
           await  db.AddAsync(shoppingCart);
         }
 
+        public async Task<ShoppingCart> Detail(int id)
+        {
+            ShoppingCart cartObj = new()
+            {
+                Count = 1,
+                ProductId = id,
+                Product = await db.Products.Include(x => x.Category)
+                                         .FirstOrDefaultAsync(x => x.Id.Equals(id)),
+            };
+
+            return cartObj;
+
+        }
     }
 
 }
