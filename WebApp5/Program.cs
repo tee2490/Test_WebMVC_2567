@@ -47,6 +47,7 @@ builder.Services.AddScoped<IRoleService, RoleService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<ProductService>();
 builder.Services.AddScoped<ShoppingCartService>();
+builder.Services.AddScoped<CartService>();
 
 
 var app = builder.Build();
