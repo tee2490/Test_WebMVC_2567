@@ -1,4 +1,6 @@
 ﻿
+using System.Security.Claims;
+
 namespace WebApp5.Services
 {
     public class ShoppingCartService : IShoppingCartService<ShoppingCart>
@@ -27,7 +29,22 @@ namespace WebApp5.Services
 
         public async Task Add(ShoppingCart shoppingCart)
         {
-          await  db.AddAsync(shoppingCart);
+            //สินค้าตัวนี้มียัง
+            ShoppingCart cartFromDb = db.ShoppingCarts.FirstOrDefault(
+                u => u.UserId == shoppingCart.UserId && u.ProductId == shoppingCart.ProductId);
+
+            if (cartFromDb == null) //สินค้าใหม่
+            {
+                await db.AddAsync(shoppingCart);
+                
+            }
+            else //สินค้าเก่า
+            {
+                IncrementCount(cartFromDb, shoppingCart.Count);
+            }
+
+            await Save();
+
         }
 
         public async Task<ShoppingCart> Detail(int id)

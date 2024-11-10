@@ -1,4 +1,6 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace WebApp5.Controllers
 {
@@ -7,7 +9,7 @@ namespace WebApp5.Controllers
         private readonly ProductService ps;
         private readonly ShoppingCartService shoppingCartService;
 
-        public HomeController(ProductService ps,ShoppingCartService shoppingCartService )
+        public HomeController(ProductService ps, ShoppingCartService shoppingCartService)
         {
             this.ps = ps;
             this.shoppingCartService = shoppingCartService;
@@ -15,12 +17,12 @@ namespace WebApp5.Controllers
 
         public async Task<IActionResult> Index()
         {
-            return View( await ps.GetAll());
+            return View(await ps.GetAll());
         }
 
-        public async Task<IActionResult> Detail(int id)
+        public async Task<IActionResult> Detail(int productId)
         {
-            var shoppingCart = await shoppingCartService.Detail(id);
+            var shoppingCart = await shoppingCartService.Detail(productId);
 
             if (shoppingCart == null)
             {
@@ -30,6 +32,19 @@ namespace WebApp5.Controllers
 
             return View(shoppingCart);
         }
+
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> Detail(ShoppingCart shoppingCart)
+        {
+
+            shoppingCart.UserId = User.FindFirstValue(ClaimTypes.NameIdentifier); //???????????
+
+            await shoppingCartService.Add(shoppingCart);
+
+            return RedirectToAction(nameof(Index));
+        }
+
 
 
     }
