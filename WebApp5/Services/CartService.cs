@@ -31,5 +31,13 @@ namespace WebApp5.Services
             return shoppingCartDto;
 
         }
+
+        public async Task Plus(int cartId)
+        {
+            var cart = await db.ShoppingCarts.FindAsync(cartId);
+            shoppingCartService.IncrementCount(cart, 1);
+            await shoppingCartService.Save();
+        }
+
     }
 }

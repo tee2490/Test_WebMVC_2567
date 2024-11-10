@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using WebApp5.Services;
 
 namespace WebApp5.Controllers
 {
@@ -22,5 +23,12 @@ namespace WebApp5.Controllers
 
             return View(shoppingCartDto);
         }
+
+        public async Task<IActionResult> Plus(int cartId)
+        {
+          await cartService.Plus(cartId);
+          return RedirectToAction(nameof(Index));
+        }
+
     }
 }
