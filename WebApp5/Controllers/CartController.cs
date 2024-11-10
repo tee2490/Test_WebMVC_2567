@@ -30,5 +30,19 @@ namespace WebApp5.Controllers
           return RedirectToAction(nameof(Index));
         }
 
+        public async Task<IActionResult> Minus(int cartId)
+        {
+            await cartService.Minus(cartId);
+            return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<IActionResult> Remove(int cartId)
+        {
+           await cartService.Remove(cartId);
+
+            return RedirectToAction(nameof(Index));
+        }
+
+
     }
 }

@@ -32,6 +32,18 @@ namespace WebApp5.Services
 
         }
 
+        public async Task Minus(int cartId)
+        {
+            var cart = await db.ShoppingCarts.FindAsync(cartId);
+
+            if (cart.Count > 1)
+            {
+                shoppingCartService.DecrementCount(cart, 1);
+                await shoppingCartService.Save();
+            }
+
+        }
+
         public async Task Plus(int cartId)
         {
             var cart = await db.ShoppingCarts.FindAsync(cartId);
@@ -39,5 +51,16 @@ namespace WebApp5.Services
             await shoppingCartService.Save();
         }
 
+        public async Task Remove(int cartId)
+        {
+            var cart = await db.ShoppingCarts.FindAsync(cartId);
+
+            if (cart != null)
+            {
+                db.Remove(cart);
+                await shoppingCartService.Save();
+            }
+
+        }
     }
 }

@@ -4,5 +4,7 @@
     {
         Task<ShoppingCartDto> GetAll(string userId);
         Task Plus(int cartId);
+        Task Minus(int cartId);
+        Task Remove(int cartId);
     }
 }
