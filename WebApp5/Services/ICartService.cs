@@ -7,5 +7,6 @@
         Task Minus(int cartId);
         Task Remove(int cartId);
         Task<ShoppingCartDto> Summary(string userId);
+        Task<bool> SummaryPost(ShoppingCartDto shoppingCartDto,string userId,IFormFile file);
     }
 }

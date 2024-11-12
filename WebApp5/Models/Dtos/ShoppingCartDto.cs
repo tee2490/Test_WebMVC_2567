@@ -2,7 +2,7 @@
 {
     public class ShoppingCartDto
     {
-        public OrderHeader OrderHeader { get; set; }
+        public OrderHeader OrderHeader { get; set; } = new OrderHeader();
         public IEnumerable<ShoppingCart> ListCart { get; set; }
 
     }
