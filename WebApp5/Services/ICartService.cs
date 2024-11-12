@@ -6,5 +6,6 @@
         Task Plus(int cartId);
         Task Minus(int cartId);
         Task Remove(int cartId);
+        Task<ShoppingCartDto> Summary(string userId);
     }
 }

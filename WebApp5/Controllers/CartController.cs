@@ -43,6 +43,15 @@ namespace WebApp5.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        public async Task<IActionResult> Summary()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            var shoppingCartDto = await cartService.Summary(userId);
+
+            return View(shoppingCartDto);
+        }
+
 
     }
 }
