@@ -29,5 +29,19 @@ namespace WebApp5.Controllers
             return View(orderDto);
         }
 
+
+        [HttpPost]
+         public async Task<IActionResult> UpdateOrderHeader()
+        {
+            var success = await orderService.UpdateOrderHeader(orderDto);
+
+            string message = "Not Success";
+            if (success) message = "Success";
+            TempData["message"] = message;
+
+            return RedirectToAction("Detail", "Order", new { orderId=orderDto.OrderHeader.Id });
+        }
+
+
     }
 }

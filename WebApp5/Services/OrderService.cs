@@ -31,6 +31,25 @@ namespace WebApp5.Services
 
             return orderDto;
 
-        } 
+        }
+
+        public async Task<bool> UpdateOrderHeader(OrderDto orderDto)
+        {
+            var orderHeaderFromDb = await db.OrderHeaders.FindAsync(orderDto.OrderHeader.Id);
+
+            orderHeaderFromDb.Name = orderDto.OrderHeader.Name;
+            orderHeaderFromDb.StreetAddress = orderDto.OrderHeader.StreetAddress;
+            orderHeaderFromDb.City = orderDto.OrderHeader.City;
+            orderHeaderFromDb.State = orderDto.OrderHeader.State;
+            orderHeaderFromDb.PostalCode = orderDto.OrderHeader.PostalCode;
+
+            db.OrderHeaders.Update(orderHeaderFromDb);
+            var success = await db.SaveChangesAsync() > 0;
+
+            return success;
+
+        }
+
+
     }
 }
