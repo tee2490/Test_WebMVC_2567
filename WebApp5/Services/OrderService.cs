@@ -50,6 +50,24 @@ namespace WebApp5.Services
 
         }
 
+        public async Task<string> UpdateStatusOrder(OrderDto orderDto, string status)
+        {
+            string message;
+            var orderHeaderFromDb = await db.OrderHeaders.FindAsync(orderDto.OrderHeader.Id);
 
+            if (orderHeaderFromDb.OrderStatus == SD.StatusPending)
+            {
+                orderHeaderFromDb.OrderStatus = status;
+                await db.SaveChangesAsync();
+                message = "Status has been updated Succesfully.";
+            }
+            else
+            {
+                message = "Can't update because status has ended.";
+            }
+
+            return message;
+
+        }
     }
 }

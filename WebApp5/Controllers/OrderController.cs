@@ -43,5 +43,17 @@ namespace WebApp5.Controllers
         }
 
 
+        [HttpPost]
+        public async Task<IActionResult> StatusOrder(string status)
+        {
+            var message = await orderService.UpdateStatusOrder(orderDto, status);
+
+            TempData["message"] = message;
+
+            return RedirectToAction("Detail", "Order", new { orderId = orderDto.OrderHeader.Id });
+        }
+
+
+
     }
 }
