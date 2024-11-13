@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApp5.Controllers
@@ -51,6 +52,16 @@ namespace WebApp5.Controllers
             TempData["message"] = message;
 
             return RedirectToAction("Detail", "Order", new { orderId = orderDto.OrderHeader.Id });
+        }
+
+
+        public async Task<IActionResult> Delete(int orderId)
+        {
+            var message = await orderService.DeleteOrder(orderId);
+
+            TempData["message"] = message;
+
+            return RedirectToAction(nameof(Index));
         }
 
 

@@ -14,6 +14,34 @@ namespace WebApp5.Services
             this.webHostEnvironment = webHostEnvironment;
         }
 
+        public async Task<dynamic> DeleteOrder(int orderId)
+        {
+            var orderHeaderFromDb = await db.OrderHeaders.FindAsync(orderId);
+
+            if (orderHeaderFromDb == null) return "Not found";
+
+            #region Image Management ลบรูปภาพบิลชำระเงิน
+            string wwwRootPath = webHostEnvironment.WebRootPath;
+
+            if (orderHeaderFromDb.PaymentImage != null)
+            {
+                var oldImagePath = Path.Combine(wwwRootPath, orderHeaderFromDb.PaymentImage.TrimStart('\\'));
+                if (System.IO.File.Exists(oldImagePath))
+                {
+                    System.IO.File.Delete(oldImagePath);
+                }
+            }
+            #endregion
+
+            db.Remove(orderHeaderFromDb); //ถ้าลบฝั่ง 1 ฝั่ง many ลบอัตโนมัติ
+            var success = await db.SaveChangesAsync() > 0;
+
+            //var message = success ? "Success" : "Not success";
+
+            return success ? "Success" : "Not success";
+
+        }
+
         public async Task<List<OrderHeader>> GetAllOrderHeader()
         {
             return await db.OrderHeaders.ToListAsync();
